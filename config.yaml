@@ -1,0 +1,114 @@
+rclone:
+  config: /mnt/user/appdata/crop/rclone.conf
+  path: /mnt/user/appdata/crop/rclone
+  stats: 30s
+  live_rotate: true
+  service_account_remotes:
+    '/mnt/user/appdata/crop/service_accounts':
+      - tv_crypt
+      - movie_crypt
+      - anime_crypt
+      - moviedocumentary_crypt
+      - movie4k_crypt
+      - tvdocumentary_crypt
+      - tvcomedy_crypt
+      - tv4k_crypt
+  global_params:
+    default:
+      move:
+        - '--order-by=modtime,ascending'
+        - '--transfers=8'
+        - '--delete-empty-src-dirs'
+      sync:
+        - '--fast-list'
+        - '--tpslimit-burst=50'
+        - '--max-backlog=2000000'
+        - '--track-renames'
+        - '--use-mmap'
+        - '--no-update-modtime'
+        - '--drive-chunk-size=128M'
+        - '--drive-use-trash=false'
+      dedupe:
+        - '--dedupe-mode=newest'
+        - '--tpslimit=5'
+uploader:
+  - name: tv_crypt
+    enabled: true
+    check:
+      limit: 60
+      type: age
+    local_folder: /mnt/user/crop/local/tv
+    remotes:
+      move: 'tv_crypt:/tv'
+    rclone_params:
+      global_move: default
+  - name: movie_crypt
+    enabled: true
+    check:
+      limit: 60
+      type: age
+    local_folder: /mnt/user/crop/local/movie
+    remotes:
+      move: 'movie_crypt:/movies'
+    rclone_params:
+      global_move: default
+  - name: anime_crypt
+    enabled: true
+    check:
+      limit: 60
+      type: age
+    local_folder: /mnt/user/crop/local/anime
+    remotes:
+      move: 'anime_crypt:/anime'
+    rclone_params:
+      global_move: default
+  - name: moviedocumentary_crypt
+    enabled: true
+    check:
+      limit: 60
+      type: age
+    local_folder: /mnt/user/crop/local/moviedocumentary
+    remotes:
+      move: 'moviedocumentary_crypt:/moviedocumentary'
+    rclone_params:
+      global_move: default
+  - name: movie4k_crypt
+    enabled: true
+    check:
+      limit: 60
+      type: age
+    local_folder: /mnt/user/crop/local/movie4k
+    remotes:
+      move: 'movie4k_crypt:/movies\ 4k '
+    rclone_params:
+      global_move: default
+  - name: tvdocumentary_crypt
+    enabled: true
+    check:
+      limit: 60
+      type: age
+    local_folder: /mnt/user/crop/local/tvdocumentary
+    remotes:
+      move: 'tvdocumentary_crypt:/tvdocumentary'
+    rclone_params:
+      global_move: default
+  - name: tvcomedy_crypt
+    enabled: true
+    check:
+      limit: 60
+      type: age
+    local_folder: /mnt/user/crop/local/tvcomedy
+    remotes:
+      move: 'tvcomedy_crypt:/tv_comedy'
+    rclone_params:
+      global_move: default
+  - name: tv4k_crypt
+    enabled: true
+    check:
+      limit: 60
+      type: age
+    local_folder: /mnt/user/crop/local/tv4k
+    remotes:
+      move: 'tv4k_crypt:/tv\ 4k'
+    rclone_params:
+      global_move: default

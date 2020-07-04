@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "$(date "+%d.%m.%Y %T") INFO: Crop upload started"
+
+/mnt/user/appdata/crop/crop upload --config /mnt/user/appdata/crop/config.yaml
+
+echo "$(date "+%d.%m.%Y %T") INFO: Script complete"

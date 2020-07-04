@@ -1,0 +1,104 @@
+#!/bin/bash
+
+/mnt/user/appdata/crop/lclone mount \
+	--config=/mnt/user/appdata/crop/rclone.conf \
+	--allow-other \
+	--buffer-size 256M \
+	--dir-cache-time 720h \
+	--drive-chunk-size 512M \
+	--vfs-read-chunk-size 128M \
+	--vfs-read-chunk-size-limit off \
+	--vfs-cache-mode writes \
+	anime_crypt:/anime /mnt/user/crop/cloud/anime &
+	
+sleep 1
+
+/mnt/user/appdata/crop/lclone mount \
+	--config=/mnt/user/appdata/crop/rclone.conf \
+	--allow-other \
+	--buffer-size 256M \
+	--dir-cache-time 720h \
+	--drive-chunk-size 512M \
+	--vfs-read-chunk-size 128M \
+	--vfs-read-chunk-size-limit off \
+	--vfs-cache-mode writes \
+	moviedocumentary_crypt:/moviedocumentary /mnt/user/crop/cloud/moviedocumentary &
+
+sleep 1
+
+/mnt/user/appdata/crop/lclone mount \
+	--config=/mnt/user/appdata/crop/rclone.conf \
+	--allow-other \
+	--buffer-size 256M \
+	--dir-cache-time 720h \
+	--drive-chunk-size 512M \
+	--vfs-read-chunk-size 128M \
+	--vfs-read-chunk-size-limit off \
+	--vfs-cache-mode writes \
+	movie_crypt:/movies /mnt/user/crop/cloud/movie &
+
+sleep 1
+
+/mnt/user/appdata/crop/lclone mount \
+	--config=/mnt/user/appdata/crop/rclone.conf \
+	--allow-other \
+	--buffer-size 256M \
+	--dir-cache-time 720h \
+	--drive-chunk-size 512M \
+	--vfs-read-chunk-size 128M \
+	--vfs-read-chunk-size-limit off \
+	--vfs-cache-mode writes \
+	movie4k_crypt:/movies\ 4k /mnt/user/crop/cloud/movie4k &
+
+sleep 1
+
+/mnt/user/appdata/crop/lclone mount \
+	--config=/mnt/user/appdata/crop/rclone.conf \
+	--allow-other \
+	--buffer-size 256M \
+	--dir-cache-time 720h \
+	--drive-chunk-size 512M \
+	--vfs-read-chunk-size 128M \
+	--vfs-read-chunk-size-limit off \
+	--vfs-cache-mode writes \
+	tvdocumentary_crypt:/tvdocumentary /mnt/user/crop/cloud/tvdocumentary &
+
+sleep 1
+
+/mnt/user/appdata/crop/lclone mount \
+	--config=/mnt/user/appdata/crop/rclone.conf \
+	--allow-other \
+	--buffer-size 256M \
+	--dir-cache-time 720h \
+	--drive-chunk-size 512M \
+	--vfs-read-chunk-size 128M \
+	--vfs-read-chunk-size-limit off \
+	--vfs-cache-mode writes \
+	tvcomedy_crypt:/tv_comedy /mnt/user/crop/cloud/tvcomedy &
+
+sleep 1
+
+/mnt/user/appdata/crop/lclone mount \
+	--config=/mnt/user/appdata/crop/rclone.conf \
+	--allow-other \
+	--dir-cache-time 720h \
+	--drive-chunk-size 512M \
+	--vfs-read-chunk-size 128M \
+	--vfs-read-chunk-size-limit off \
+	--vfs-cache-mode writes \
+	tv_crypt:/tv /mnt/user/crop/cloud/tv &
+
+sleep 1
+
+/mnt/user/appdata/crop/lclone mount \
+	--config=/mnt/user/appdata/crop/rclone.conf \
+	--allow-other \
+	--buffer-size 256M \
+	--dir-cache-time 720h \
+	--drive-chunk-size 512M \
+	--vfs-read-chunk-size 128M \
+	--vfs-read-chunk-size-limit off \
+	--vfs-cache-mode writes \
+	tv4k_crypt:/tv\ 4k /mnt/user/crop/cloud/tv4k 
+
+echo "$(date "+%d.%m.%Y %T") INFO: Startup script complete"s

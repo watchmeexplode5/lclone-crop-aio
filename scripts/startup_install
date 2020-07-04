@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# REQUIRED SETTINGS
+
+####### Settings for mergerfs mount location variables #######
+LocalFilesLocation="/mnt/user/crop/local" # Location for local files to be merged with rclone mount
+MergerFSMountLocation="/mnt/user/crop/union" # Rclone data folder location
+CloudFilesLocation="/mnt/user/crop/cloud"
+
+
+####### END OF USER SETTINGS #######
+
+git clone https://github.com/watchmeexplode5/lclone-crop-aio /mnt/user/appdata/crop
+
+if [[ -f "/bin/mergerfs" ]]; then
+			echo "$(date "+%d.%m.%Y %T") INFO: Mergerfs already installed, proceeding to create mergerfs mount"
+		else
+# Build mergerfs binary
+			echo "$(date "+%d.%m.%Y %T") INFO: Mergerfs not installed - installing now."
+			mkdir -p /mnt/user/appdata/crop/mergerfs
+			docker run -v /mnt/user/appdata/crop/mergerfs:/build --rm trapexit/mergerfs-static-build
+			mv /mnt/user/appdata/crop/mergerfs/mergerfs /bin
+# check if mergerfs install successful
+			echo "$(date "+%d.%m.%Y %T") INFO: *sleeping for 5 seconds"
+			sleep 5
+
+fi
+# Create mergerfs mount
+# make sure mergerfs mount point is empty
+		mv $MergerFSMountLocation $LocalFilesLocation
+		mkdir -p $MergerFSMountLocation
+# mergerfs mount command
+mergerfs $LocalFilesLocation:$CloudFilesLocation $MergerFSMountLocation -o rw,async_read=false,use_ino,allow_other,func.getattr=newest,category.action=all,category.create=ff,cache.files=partial,dropcacheonclose=true
+
+
+echo "$(date "+%d.%m.%Y %T") INFO: Script complete"
+
+exit
