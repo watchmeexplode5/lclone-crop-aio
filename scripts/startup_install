@@ -54,10 +54,7 @@ if [[ -f "/bin/mergerfs" ]]; then
 			sleep 5
 
 fi
-# Create mergerfs mount
-# make sure mergerfs mount point is empty
-		mv $MergerFSMountLocation $LocalFilesLocation
-		mkdir -p $MergerFSMountLocation
+
 # mergerfs mount command
 mergerfs $LocalFilesLocation:$CloudFilesLocation $MergerFSMountLocation -o rw,async_read=false,use_ino,allow_other,func.getattr=newest,category.action=all,category.create=ff,cache.files=partial,dropcacheonclose=true
 
