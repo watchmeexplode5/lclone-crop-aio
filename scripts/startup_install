@@ -6,11 +6,31 @@
 LocalFilesLocation="/mnt/user/crop/local" # Location for local files to be merged with rclone mount
 MergerFSMountLocation="/mnt/user/crop/union" # Rclone data folder location
 CloudFilesLocation="/mnt/user/crop/cloud"
-
+CropappdataLocation="$/mnt/user/appdata/crop"
 
 ####### END OF USER SETTINGS #######
 
-git clone https://github.com/watchmeexplode5/lclone-crop-aio /mnt/user/appdata/crop
+git clone https://github.com/watchmeexplode5/lclone-crop-aio /mnt/user/appdata/temp
+mkdir -p $CropappdataLocation/
+mv /mnt/user/appdata/temp/crop $CropappdataLocation/crop
+mv /mnt/user/appdata/temp/lclone $CropappdataLocation/lclone
+
+if [[ -f "$CropappdataLocation/config.yaml" ]]; then
+			echo "$(date "+%d.%m.%Y %T") INFO: Config already present - Will not override."
+		else
+			mv /mnt/user/appdata/temp/config.yaml $CropappdataLocation/config.yaml
+fi
+
+if [[ -f "$CropappdataLocation/service_accounts" ]]; then
+			echo "$(date "+%d.%m.%Y %T") INFO: Service Account File already present - Will not override."
+		else
+			mv /mnt/user/appdata/temp/service_accounts $CropappdataLocation/service_accounts
+fi
+
+rm -rf /mnt/user/appdata/temp
+
+chmod +x $CropappdataLocation/crop
+chmod +x $CropappdataLocation/lclone
 
 if [[ -f "/bin/mergerfs" ]]; then
 			echo "$(date "+%d.%m.%Y %T") INFO: Mergerfs already installed, proceeding to create mergerfs mount"
