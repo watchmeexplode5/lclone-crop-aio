@@ -6,7 +6,7 @@
 LocalFilesLocation="/mnt/user/crop/local" # Location for local files to be merged with rclone mount
 MergerFSMountLocation="/mnt/user/crop/union" # Rclone data folder location
 CloudFilesLocation="/mnt/user/crop/cloud"
-CropappdataLocation="$/mnt/user/appdata/crop"
+CropappdataLocation="/mnt/user/appdata/crop"
 
 ####### END OF USER SETTINGS #######
 
@@ -21,14 +21,23 @@ if [[ -f "$CropappdataLocation/config.yaml" ]]; then
 			mv /mnt/user/appdata/temp/config.yaml $CropappdataLocation/config.yaml
 fi
 
+if [[ -f "$CropappdataLocation/rclone.conf" ]]; then
+			echo "$(date "+%d.%m.%Y %T") INFO: Rclone Config already present - Will not override."
+		else
+			mv /mnt/user/appdata/temp/rclone.conf $CropappdataLocation/rclone.conf
+fi
+
 if [[ -f "$CropappdataLocation/service_accounts" ]]; then
 			echo "$(date "+%d.%m.%Y %T") INFO: Service Account File already present - Will not override."
 		else
 			mv /mnt/user/appdata/temp/service_accounts $CropappdataLocation/service_accounts
 fi
 
+
+echo "$(date "+%d.%m.%Y %T") INFO: Removing Temp."
 rm -rf /mnt/user/appdata/temp
 
+echo "$(date "+%d.%m.%Y %T") INFO: Setting Permissions."
 chmod +x $CropappdataLocation/crop
 chmod +x $CropappdataLocation/lclone
 
