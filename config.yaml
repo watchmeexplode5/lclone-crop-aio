@@ -1,6 +1,6 @@
 rclone:
   config: /mnt/user/appdata/crop/rclone.conf
-  path: /mnt/user/appdata/crop/rclone
+  path: /mnt/user/appdata/crop/lclone
   stats: 30s
   live_rotate: true
   service_account_remotes:
