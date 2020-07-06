@@ -5,7 +5,7 @@
 [Lclone](https://github.com/l3uddz/rclone/tree/feat/sa-cycle) -- 
 Lclone (also called rclone_gclone) is a modified rclone build which rotates to a service accounts upon quota/api errors. This effectively not only removes the upload limit but also the download limit (even via mount command - solving plex/sonarr deep dive scan bans) and also a bunch of optimization features. 
 
-[CROP](https://github.com/l3uddz/crop) -- 
+[Crop](https://github.com/l3uddz/crop) -- 
 Crop is a command line tool for uploading which utilizes rotating service accounts once a limit has been hit. So it runs ever service account to it's limit before rotating.
 
 [MergerFS](https://github.com/trapexit/mergerfs)
