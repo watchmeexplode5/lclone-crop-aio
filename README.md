@@ -36,37 +36,55 @@ Be aware you need to add these two new tags for the lclone build to rotate servi
 drive_service_account_file_path = /mnt/user/appdata/crop/service_accounts (NOTE: No trailing slash for service account folder)
 service_account_file = /mnt/user/appdata/crop/service_accounts/sa_gdrive_upload1.json (ANY SERVICE ACCOUNT WITHIN THAT FOLDER - Upon rotation, lclone will pick aother one - regardless of naming structure)
 
+
+Appdata Folder Structure
+
+```
+ \mnt\user\appadata\crop
+            │
+            ├── service_accounts
+            │          ├── sa_gdrive_upload1.json
+            │          ├── sa_gdrive_uploadXX.json
+            │          └── sa_gdrive_upload100.json
+            ├── crop
+            ├── lclone
+            ├── config.yaml
+            └── rclone.conf
+```
+
+
+
 Here is the folder structure that I utilize to ensure ease of setup:
 
 ```
-  crop
-    │
-    ├── cloud (Google Drive Mount)
-    │           ├── movies
-    │           ├── music
-    │           └── tv
-    │
-    ├── local
-    │     ├── movies
-    │     ├── music
-    │     ├── tv
-    │     └── downloads
-    │             ├── manual_downloads
-    │             │
-    │             ├── nzb_downloads
-    │             │           ├── completed
-    │             │           └── incompleted
-    │             │
-    │             └── torrent_downloads
-    │                         ├── completed
-    │                         └── incompleted
-    │
-    │
-    └── union (Gdrive + Tdrive + Local)
-                ├── movies
-                ├── music
-                ├── tv
-                └── downloads
+ \mnt\user\crop
+            │
+            ├── cloud (Google Drive Mount)
+            │           ├── movies
+            │           ├── music
+            │           └── tv
+            │
+            ├── local
+            │     ├── movies
+            │     ├── music
+            │     ├── tv
+            │     └── downloads
+            │             ├── manual_downloads
+            │             │
+            │             ├── nzb_downloads
+            │             │           ├── completed
+            │             │           └── incompleted
+            │             │
+            │             └── torrent_downloads
+            │                         ├── completed
+            │                         └── incompleted
+            │
+            │
+            └── union (Tdrive + Local)
+                        ├── movies
+                        ├── music
+                        ├── tv
+                        └── downloads
 ```
 
 
