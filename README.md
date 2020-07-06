@@ -21,8 +21,6 @@ Script Order -- startup_install --> lclone_mount --> crop_upload.
 
 Currently I manually run the lclone_mount script after the startup script has finished. If you choose you could have script the startup_install run the mount script upon completion but for testing purposes, it's easier to just run the mount manually after startup. 
 
-
-
 Currently I run the startup_install script on startup of the array. This script pulls this repository to a temp folder, then moves any needed files to the /mnt/user/appdata/crop folder. After the move it fixes any permissions for both crop and lclone 
 
 Next I run the lclone_mount script. This will mount your drives via the lclone/rclone mount command. Feel free to edit this script to fit your use. Note that it references a rclone config located at /mnt/user/appdata/crop. This is to avoid editing any stable rclone configs you may be running along side these builds. 
@@ -36,6 +34,16 @@ Be aware you need to add these two new tags for the lclone build to rotate servi
 drive_service_account_file_path = /mnt/user/appdata/crop/service_accounts (NOTE: No trailing slash for service account folder)
 service_account_file = /mnt/user/appdata/crop/service_accounts/sa_gdrive_upload1.json (ANY SERVICE ACCOUNT WITHIN THAT FOLDER - Upon rotation, lclone will pick aother one - regardless of naming structure)
 
+
+## Updating
+Crop can be updated simply by running: /mnt/user/appdata/crop/crop update
+
+Lclone needs to be build from source at the current stage for all updates. That is why I've placed it on this repo simply for ease of use. To update it you can re-run the startup_install script. You can build from source via golang if you would like by going to l3dudz repo [Lclone](https://github.com/l3uddz/rclone/tree/feat/sa-cycle). 
+
+Mergerfs builds the latest build upon running the startup_install script.
+
+
+## Folder Structure (just for reference)
 
 Appdata Folder Structure
 
