@@ -32,6 +32,7 @@ crop_upload: run every XX minutes via CRON. You could set this to whatever value
 
 
 ## Config Files
+<br/>
 config.yaml:
 This is the config file which crop will reference for uploading. You can edit as needed. You can pass other rclone commands within crop on a drive basis or a global basis. Here is an example of bwlimit on global_move: 
 ```
@@ -41,7 +42,7 @@ Please refer to the official [crop](https://github.com/l3uddz/crop) documentatio
 <br/>
 <br/>
 <br/>
-rclone.conf file:
+rclone.conf:
 Follows the standard format for a rlcone.conf file. Simply copy and paste your values.
 
 Be aware you need to add these two new tags for the lclone conf file (named: rclone.conf) for rotating service accounts.
