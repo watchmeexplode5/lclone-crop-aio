@@ -39,7 +39,8 @@ global_move: '--bwlimit "01:00","45M" "08:00","30M" "16:00","30M"'
 ```
 Please refer to the official [crop](https://github.com/l3uddz/crop) documentation for additional information on how to configure crop (such as sync settings).
 <br/>
-
+<br/>
+<br/>
 rclone.conf file:
 Follows the standard format for a rlcone.conf file. Simply copy and paste your values.
 
