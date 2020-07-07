@@ -2,19 +2,23 @@
 
 # REQUIRED SETTINGS
 
-####### Settings for mergerfs mount location variables #######
-LocalFilesLocation="/mnt/user/crop/local" # Location for local files to be merged with rclone mount
-MergerFSMountLocation="/mnt/user/crop/union" # Rclone data folder location
-CloudFilesLocation="/mnt/user/crop/cloud"
-CropappdataLocation="/mnt/user/appdata/crop"
+####### Settings for location variables #######
+LocalFilesLocation="/mnt/user/crop/local" # Location for local files merged in union
+CloudFilesLocation="/mnt/user/crop/cloud" # Location where cloud files will be mounted via rclone/lclone
+MergerFSMountLocation="/mnt/user/crop/union" # Location of Union folder (Combination of local and cloud folder) 
+CropappdataLocation="/mnt/user/appdata/crop" # Appdata location for uploader/lclone installation, config files, and service accounts
 
 ####### END OF USER SETTINGS #######
 
+
+# download lclone, crop, and default configs from github repo
 git clone https://github.com/watchmeexplode5/lclone-crop-aio /mnt/user/appdata/temp
 mkdir -p $CropappdataLocation/
 mv /mnt/user/appdata/temp/crop $CropappdataLocation/crop
 mv /mnt/user/appdata/temp/lclone $CropappdataLocation/lclone
 
+
+# check if configs/files already present. Will not update user files if already present
 if [[ -f "$CropappdataLocation/config.yaml" ]]; then
 			echo "$(date "+%d.%m.%Y %T") INFO: Config already present - Will not override."
 		else
@@ -22,7 +26,7 @@ if [[ -f "$CropappdataLocation/config.yaml" ]]; then
 fi
 
 if [[ -f "$CropappdataLocation/rclone.conf" ]]; then
-			echo "$(date "+%d.%m.%Y %T") INFO: Rclone Config already present - Will not override."
+			echo "$(date "+%d.%m.%Y %T") INFO: Rclone/Lclone config already present - Will not override."
 		else
 			mv /mnt/user/appdata/temp/rclone.conf $CropappdataLocation/rclone.conf
 fi
@@ -33,18 +37,20 @@ if [[ -f "$CropappdataLocation/service_accounts" ]]; then
 			mv /mnt/user/appdata/temp/service_accounts $CropappdataLocation/service_accounts
 fi
 
-
+# clean up temp folder
 echo "$(date "+%d.%m.%Y %T") INFO: Removing Temp."
 rm -rf /mnt/user/appdata/temp
 
-echo "$(date "+%d.%m.%Y %T") INFO: Setting Permissions."
+# ensure that permission are correct for lclone and crop
+echo "$(date "+%d.%m.%Y %T") INFO: Setting permissions for Lclone and Crop"
 chmod +x $CropappdataLocation/crop
 chmod +x $CropappdataLocation/lclone
 
+# check if mergerfs is present and if not install
 if [[ -f "/bin/mergerfs" ]]; then
 			echo "$(date "+%d.%m.%Y %T") INFO: Mergerfs already installed, proceeding to create mergerfs mount"
 		else
-# Build mergerfs binary
+# build mergerfs binary
 			echo "$(date "+%d.%m.%Y %T") INFO: Mergerfs not installed - installing now."
 			mkdir -p /mnt/user/appdata/crop/mergerfs
 			docker run -v /mnt/user/appdata/crop/mergerfs:/build --rm trapexit/mergerfs-static-build
@@ -55,10 +61,10 @@ if [[ -f "/bin/mergerfs" ]]; then
 
 fi
 
-# mergerfs mount command
+# mergerfs mount command to merger local and cloud folder to user set union folder
 mergerfs $LocalFilesLocation:$CloudFilesLocation $MergerFSMountLocation -o rw,async_read=false,use_ino,allow_other,func.getattr=newest,category.action=all,category.create=ff,cache.files=partial,dropcacheonclose=true
 
 
-echo "$(date "+%d.%m.%Y %T") INFO: Script complete"
+echo "$(date "+%d.%m.%Y %T") INFO: Startup script is complete"
 
 exit
