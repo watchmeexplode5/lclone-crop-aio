@@ -16,24 +16,40 @@ Crop is a command line tool for uploading which utilizes rotating service accoun
 
 Example scripts included in the script folder. Feel free to edit these for your use case.
 These could be used in any linux build but this readme will focus on unraid builds.
+<br/>
 
 Script Order -- startup_install --> lclone_mount --> crop_upload.
+<br/>
 
-Currently I manually run the lclone_mount script after the startup script has finished. If you choose you could have script the startup_install run the mount script upon completion but for testing purposes, it's easier to just run the mount manually after startup. 
+startup_install: Runs on startup of the array. This script pulls this repository to a temp folder, then moves any needed files to the /mnt/user/appdata/crop folder. After the move it fixes any permissions for both crop and lclone 
+<br/>
 
-Currently I run the startup_install script on startup of the array. This script pulls this repository to a temp folder, then moves any needed files to the /mnt/user/appdata/crop folder. After the move it fixes any permissions for both crop and lclone 
+lclone_mount: Run after startup_install script has finished. You could also let it run on a schedule just encase your mounts ever drop (I don't schedule it because I don't seem to ever have issues with dropped mounts). Feel free to edit this script to fit your use. Note that it references a rclone config located at /mnt/user/appdata/crop. This is to avoid editing any stable rclone configs you may be running along side these builds. 
+<br/>
 
-Next I run the lclone_mount script. This will mount your drives via the lclone/rclone mount command. Feel free to edit this script to fit your use. Note that it references a rclone config located at /mnt/user/appdata/crop. This is to avoid editing any stable rclone configs you may be running along side these builds. 
+crop_upload: run every XX minutes via CRON. You could set this to whatever value you would like. I run it every 20 minutes.
+<br/>
 
-Then I have set the crop_upload script to run every 20 minutes via CRON. You could set this to whatever value you would like. 
 
-
+## Config Files
+config.yaml:
+This is the config file which crop will reference for uploading. You can edit as needed. You can pass other rclone commands within crop on a drive basis or a global basis. Here is an example of bwlimit on global_move: 
+```
+global_move: '--bwlimit "01:00","45M" "08:00","30M" "16:00","30M"'
+```
+Please refer to the official [crop](https://github.com/l3uddz/crop) documentation for additional information on how to configure crop (such as sync settings).
+<br/>
 
 rclone.conf file:
-Be aware you need to add these two new tags for the lclone build to rotate service accounts. 
-drive_service_account_file_path = /mnt/user/appdata/crop/service_accounts (NOTE: No trailing slash for service account folder)
-service_account_file = /mnt/user/appdata/crop/service_accounts/sa_gdrive_upload1.json (ANY SERVICE ACCOUNT WITHIN THAT FOLDER - Upon rotation, lclone will pick aother one - regardless of naming structure)
+Follows the standard format for a rlcone.conf file. Simply copy and paste your values.
 
+Be aware you need to add these two new tags for the lclone conf file (named: rclone.conf) for rotating service accounts.
+<br/>
+```
+drive_service_account_file_path = /mnt/user/appdata/crop/service_accounts (No trailing slash for service account folder)
+service_account_file = /mnt/user/appdata/crop/service_accounts/sa_gdrive_upload1.json (ANY SERVICE ACCOUNT WITHIN THAT FOLDER - Upon rotation, lclone will pick aother one - regardless of naming structure)
+```
+<br/>
 
 ## Updating
 Crop can be updated simply by running: /mnt/user/appdata/crop/crop update
