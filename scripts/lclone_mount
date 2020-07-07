@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "$(date "+%d.%m.%Y %T") INFO: Mount script started"
+
 /mnt/user/appdata/crop/lclone mount \
 	--config=/mnt/user/appdata/crop/rclone.conf \
 	--allow-other \
@@ -101,4 +103,6 @@ sleep 1
 	--vfs-cache-mode writes \
 	tv4k_crypt:/tv\ 4k /mnt/user/crop/cloud/tv4k 
 
-echo "$(date "+%d.%m.%Y %T") INFO: Startup script complete"s
+echo "$(date "+%d.%m.%Y %T") INFO: Mount script complete"
+
+exit
