@@ -50,7 +50,7 @@ Follows the standard format for a rlcone.conf file. Simply copy and paste your v
 Be aware you need to add these two new tags for the lclone conf file (named: rclone.conf) for rotating service accounts.
 <br/>
 ```
-drive_service_account_file_path = /mnt/user/appdata/crop/service_accounts (No trailing slash for service account folder)
+service_account_file_path = /mnt/user/appdata/crop/service_accounts/ (trailing slash for service account folder REQUIRED)
 service_account_file = /mnt/user/appdata/crop/service_accounts/sa_gdrive_upload1.json (ANY SERVICE ACCOUNT WITHIN THAT FOLDER - Upon rotation, lclone will pick aother one - regardless of naming structure)
 ```
 <br/>
