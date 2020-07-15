@@ -1,5 +1,22 @@
 #!/bin/bash
 
+###################################
+# remove, rename, edit any 
+# information to match your settings
+###################################
+
+###################################
+# the reason I utilize multiple mounts is because every folder is stored on
+# a different shareddrive to avoid any 400K file limit or performance hits
+###################################
+
+###################################
+# make sure to reference correct lclone location for the mount command
+# default reference is /mnt/user/appdata/crop/lclone
+###################################
+
+echo "$(date "+%d.%m.%Y %T") INFO: Mount script started"
+
 /mnt/user/appdata/crop/lclone mount \
 	--config=/mnt/user/appdata/crop/rclone.conf \
 	--allow-other \
@@ -101,4 +118,6 @@ sleep 1
 	--vfs-cache-mode writes \
 	tv4k_crypt:/tv\ 4k /mnt/user/crop/cloud/tv4k 
 
-echo "$(date "+%d.%m.%Y %T") INFO: Startup script complete"s
+echo "$(date "+%d.%m.%Y %T") INFO: Mount script complete"
+
+exit
