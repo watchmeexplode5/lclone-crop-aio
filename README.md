@@ -34,10 +34,16 @@ crop_upload: run every XX minutes via CRON. You could set this to whatever value
 ## Config Files
 <br/>
 config.yaml:
-This is the config file which crop will reference for uploading. You can edit as needed. You can pass other rclone commands within crop on a drive basis or a global basis. Here is an example of bwlimit on global_move: 
+This is the config file which crop will reference for uploading. You can edit as needed. You can pass other rclone commands within crop on a drive basis or a global basis. Here is an example of some commands applying to global_move: 
 
 ```
-global_move: '--bwlimit "01:00","45M" "08:00","30M" "16:00","30M"'
+global_params:
+    default:
+      move:
+        - '--bwlimit=01:00,45M 08:00,30M 16:00,30M'
+        - '--order-by=modtime,ascending'
+        - '--transfers=8'
+        - '--delete-empty-src-dirs'
 ```
 
 Please refer to the official [crop](https://github.com/l3uddz/crop) documentation for additional information on how to configure crop (such as sync settings).
